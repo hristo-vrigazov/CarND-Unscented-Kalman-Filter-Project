@@ -303,10 +303,10 @@ void UKF::UpdateRadar(const MeasurementPackage &meas_package) {
   MatrixXd Zsig = MatrixXd(measurement_dimension, n_sigma_);
   
   for (int i = 0; i < n_sigma_; i++) {
-    double p_x = Xsig_pred_(0,i);
-    double p_y = Xsig_pred_(1,i);
-    double v  = Xsig_pred_(2,i);
-    double yaw = Xsig_pred_(3,i);
+    double p_x = Xsig_pred_(0, i);
+    double p_y = Xsig_pred_(1, i);
+    double v = Xsig_pred_(2, i);
+    double yaw = Xsig_pred_(3, i);
 
     double v1 = cos(yaw) * v;
     double v2 = sin(yaw) * v;
@@ -322,7 +322,6 @@ void UKF::UpdateRadar(const MeasurementPackage &meas_package) {
       z_pred = z_pred + weights_(i) * Zsig.col(i);
   }
 
-  //measurement covariance matrix S
   MatrixXd S = MatrixXd(measurement_dimension, measurement_dimension);
   S.fill(0.0);
   for (int i = 0; i < n_sigma_; i++) {
@@ -361,7 +360,7 @@ void UKF::UpdateRadar(const MeasurementPackage &meas_package) {
 
   //update state mean and covariance matrix
   x_ = x_ + K * z_diff;
-  P_ = P_ - K*S*K.transpose();  
+  P_ = P_ - K * S * K.transpose();
   
   NIS_radar_ = z_.transpose() * S.inverse() * z_;  
 }
