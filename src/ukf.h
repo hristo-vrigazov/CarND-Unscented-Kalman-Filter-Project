@@ -62,6 +62,10 @@ public:
   ///* State dimension
   int n_x_;
 
+  int n_w_;
+
+  int n_sigma_;
+
   ///* Augmented state dimension
   int n_aug_;
 
@@ -88,7 +92,7 @@ public:
    * ProcessMeasurement
    * @param meas_package The latest measurement data of either radar or laser
    */
-  void ProcessMeasurement(MeasurementPackage meas_package);
+  void ProcessMeasurement(const MeasurementPackage &meas_package);
 
   /**
    * Prediction Predicts sigma points, the state, and the state covariance
@@ -101,13 +105,21 @@ public:
    * Updates the state and the state covariance matrix using a laser measurement
    * @param meas_package The measurement at k+1
    */
-  void UpdateLidar(MeasurementPackage meas_package);
+  void UpdateLidar(const MeasurementPackage &meas_package);
 
   /**
    * Updates the state and the state covariance matrix using a radar measurement
    * @param meas_package The measurement at k+1
    */
-  void UpdateRadar(MeasurementPackage meas_package);
+  void UpdateRadar(const MeasurementPackage &meas_package);
+
+  void InitializeRadar(const MeasurementPackage &meas_package);
+
+  void InitializeLaser(const MeasurementPackage &meas_package);
+
+  void InitializeWeights();
+
+  void NormalizeAngle(double &angle);
 };
 
 #endif /* UKF_H */
